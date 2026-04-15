@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+
+  <!-- Fuentes -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+  <!-- AUDIO -->
+  <audio id="bgSong" preload="auto" playsinline></audio>
+
+  <div id="openingPhrase" class="opening-phrase"></div>
+  <div id="scrollHint" class="scroll-hint"></div>
+
+  <!-- BOTÓN DE MÚSICA -->
+  <div id="musicToggle" class="music-btn">
+    <img id="musicIcon" src="" alt="music toggle" />
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar reveal-zoom">
+    <div class="nav-inner">
+      <div class="logo reveal reveal-left"></div>
+      <div class="nav-toggle" id="navToggle">☰</div>
+      <ul class="nav-menu reveal reveal-right" id="navMenu"></ul>
+    </div>
+  </nav>
+
+  <!-- ================= SOBRE ================= -->
+  <div id="envelopeOverlay" class="envelope-overlay">
+    <div class="envelope">
+      <div class="flap front"></div>
+      <div class="flap top"></div>
+      <div class="letter"></div>
+      <div id="sealButton" class="seal">
+        <img src="assets/img/sello.png" alt="Abrir" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CONTENIDO ================= -->
+  <div id="siteRoot" class="site-root">
+    <!-- ================= HERO ================= -->
+    <section id="inicio" class="section-arco hero-arco reveal">
+      <!--
+      <img src="assets/img/acuarela-left.svg" class="acuarela-left" />
+      <img src="assets/img/acuarela-right.svg" class="acuarela-right" />
+      -->
+      
+      <!--
+      <div class="arco-base arco-hero">
+        <div class="hero-bg"></div>
+      </div>
+      -->
+
+      <!--
+      <div class="hero-mask">
+      <img src="./assets/img/antifaz.png" alt="Antifaz carnaval">
+      -->
+
+    </div>
+
+      <div class="hero-info">
+        <h1 class="hero-names reveal-zoom" id="hero-names"></h1>
+        <h1 class="hero-faltan">FALTAN</h1>
+        <div class="card">
+        <div class="hero-count reveal">
+          <div><span id="dias">00</span><small id="label-dias"></small></div>
+          <div class="sep">·</div>
+          <div>
+            <span id="horas">00</span><small id="label-horas"></small>
+          </div>
+          <div class="sep">·</div>
+          <div>
+            <span id="minutos">00</span><small id="label-minutos"></small>
+          </div>
+          <div class="sep">·</div>
+          <div>
+            <span id="segundos">00</span><small id="label-segundos"></small>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ================= PRESENTACIÓN ================= -->
+    <section id="presentacion" class="section-arco reveal">
+
+      <div class="arco-base">
+
+        <h2 id="titulo-presentacion" class="arco-title reveal reveal-left"></h2>
+
+        <h3 id="nombres-presentacion" class="arco-nombres reveal"></h3>
+
+        <p id="frase-presentacion" class="arco-frase reveal reveal-right"></p>
+
+        <div class="arco-grupo reveal reveal-left">
+          <h4 id="label-padres-novia"></h4>
+          <p id="padres-novia"></p>
+        </div>
+
+        <div class="arco-grupo reveal reveal-right">
+          <h4 id="label-padres-novio"></h4>
+          <p id="padres-novio"></p>
+        </div>
+
+        <div class="arco-grupo reveal">
+          <h4 id="label-padrinos"></h4>
+          <p id="padrinos"></p>
+        </div>
+
+        <p id="texto-final-presentacion" class="reveal"></p>
+
+      </div>
+    </section>
+
+    <!-- ================= UBICACIÓN ================= -->
+    <section id="ubicacion" class="section-arco reveal">
+
+      <!-- 🏛️ ARCO (CONTENIDO REAL) -->
+      <div class="arco-base ubicacion-premium">
+        <div class="editorial-text reveal-zoom" data-editorial="ubicacion"></div>
+
+        <h2 id="ubicacion-titulo" class="arco-title reveal-zoom"></h2>
+
+        <div id="ubicacion-fecha-general" class="reveal"></div>
+        <div id="ubicacion-lista" class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- ================= PROGRAMA ================= -->
+    <section id="programa" class="section-arco reveal">
+
+      <!-- 🏛️ ARCO (CONTENIDO REAL) -->
+      <div class="arco-base">
+        <div class="editorial-text reveal-zoom" data-editorial="programa"></div>
+
+        <h2 id="programa-titulo" class="arco-title reveal-zoom"></h2>
+
+        <div id="timeline-programa" class="timeline-programa reveal"></div>
+      </div>
+    </section>
+
+    <!-- ================= VESTIMENTA ================= -->
+    <section id="vestimenta" class="section-arco reveal">
+
+      <!-- 🏛️ ARCO (CONTENIDO REAL) -->
+      <div class="arco-base">
+        <div class="editorial-text reveal-zoom" data-editorial="vestimenta"></div>
+
+        <h2 id="vestimenta-titulo" class="arco-title reveal-zoom"></h2>
+
+        <img id="vestimenta-icon" class="vestimenta-icon reveal" />
+
+        <div class="ubicacion-card reveal">
+        <h3 id="vestimenta-formal" class="reveal"></h3>
+
+        <div class="vestimenta-group reveal reveal-left">
+          <h4 id="vestimenta-label-mujeres" class="vestimenta-label"></h4>
+          <p id="vestimenta-mujeres"></p>
+        </div>
+
+        <div class="vestimenta-group reveal reveal-right">
+          <h4 id="vestimenta-label-hombres" class="vestimenta-label"></h4>
+          <p id="vestimenta-hombres"></p>
+        </div>
+
+        <p id="vestimenta-nota" class="nota"></p>
+
+        <a id="vestimenta-inspo" target="_blank" class="btn-ubicacion"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= REGALOS ================= -->
+    <section id="regalos" class="section-arco reveal">
+
+      <!-- 🏛️ ARCO (CONTENIDO REAL) -->
+      <div class="arco-base">
+        <div class="editorial-text reveal-zoom" data-editorial="regalos"></div>
+
+        <h2 id="regalos-titulo" class="arco-title reveal-zoom"></h2>
+
+        <p id="regalos-desc" class="regalos-desc reveal"></p>
+
+        <div id="regalos-inner" class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- ================= GALERÍA ================= -->
+    <section id="galeria" class="section-arco reveal">
+
+      <!-- 🏛️ ARCO (CONTENIDO REAL) -->
+      <div class="arco-base">
+        <div class="editorial-text reveal-zoom" data-editorial="galeria"></div>
+
+        <h2 id="galeria-titulo" class="arco-title reveal-zoom"></h2>
+
+        <div class="carousel reveal">
+          <div class="carousel-track" id="carousel-track"></div>
+
+          <button class="carousel-btn left" aria-label="Anterior">
+            &#10094;
+          </button>
+
+          <button class="carousel-btn right" aria-label="Siguiente">
+            &#10095;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RSVP ================= -->
+    <section id="rsvp" class="section-arco reveal">
+
+      <!-- 🏛️ ARCO -->
+      <div class="arco-base">
+
+        <!-- ===== FORMULARIO RSVP ===== -->
+        <div id="rsvp-form" class="rsvp-container reveal">
+
+          <div class="editorial-text reveal-zoom" data-editorial="rsvp"></div>
+          <h2 id="rsvp-form-title" class="arco-title reveal-zoom"></h2>
+
+          <div class="rsvp-guest-name reveal"></div>
+          <label id="rsvpNombreLabel" class="rsvp-label">
+            Ingresa tu nombre
+          </label>
+          <div id="rsvpNombreWrapper" class="rsvp-input">
+            <input type="text" id="rsvpNombreInput" placeholder="Escribe tu nombre" />
+          </div>
+          <p class="rsvp-text reveal"></p>
+
+          <div class="rsvp-options reveal">
+            <button type="button" class="rsvp-btn yes"></button>
+            <button type="button" class="rsvp-btn no"></button>
+          </div>
+
+          <p class="rsvp-note reveal"></p>
+
+        </div>
+
+        <!-- ===== CONFIRMACIÓN FINAL ===== -->
+        <div id="rsvp-final" class="reveal">
+
+          <h2 id="rsvp-final-title"></h2>
+
+          <div class="rsvp-guest-name"></div>
+
+          <p id="rsvp-final-text"></p>
+
+          <div class="rsvp-pass-info reveal">
+            <div class="rsvp-pass-item">
+              <span class="label" id="rsvpPassLabel"></span>
+              <strong id="rsvpPassValue"></strong>
+            </div>
+
+            <div class="rsvp-pass-item">
+              <span class="label" id="rsvpTableLabel"></span>
+              <strong id="rsvpTableValue"></strong>
+            </div>
+          </div>
+
+          <div class="rsvp-sign" id="rsvp-names"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+    <footer class="site-footer">
+
+      <small id="footer-text"></small>
+
+      <div class="footer-links">
+
+        <a href="https://shiny-maker.com/" target="_blank" rel="noopener" class="footer-brand">
+          Shiny Maker
+        </a>
+
+        <a href="https://wa.me/522212706617" rel="noopener" target="_blank">
+          <img src="assets/img/wh.png" alt="WhatsApp">
+        </a>
+
+        <a href="https://www.instagram.com/shinymakerstudio" rel="noopener" target="_blank">
+          <img src="assets/img/ig.png" alt="Instagram">
+        </a>
+
+        <a href="https://www.facebook.com/profile.php?id=61587591115184" rel="noopener" target="_blank">
+          <img src="assets/img/fb.png" alt="Facebook">
+        </a>
+
+      </div>
+
+    </footer>
+    <!-- ================= SCRIPTS ================= -->
+    <script src="assets/js/envelope-open.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/scroll-animations.js"></script>
+    <script src="assets/js/event-data.js"></script>
+    <script src="assets/js/countdown.js"></script>
+    <script src="assets/js/timeline.js"></script>
+    <script src="assets/js/carousel.js"></script>
+    <script src="assets/js/rsvp.js"></script>
+</body>
+
+</html>

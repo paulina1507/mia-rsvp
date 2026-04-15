@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "slug": "xv-valeria-2026",
+  "template": "xv-arco-princess",
+  "tipo_evento": "xv",
+  "paquete": "armonia",
+  "evento": {
+    "fecha": "2026-05-08T18:30:00",
+    "host": {
+      "nombre": "Mia"
+    }
+  },
+  "meta": {
+    "title": "Mis XV Años | Mia",
+    "description": "Acompáñanos a celebrar mis XV años",
+    "lang": "es",
+    "favicon": "favicon.ico"
+  },
+  "logo": {
+    "type": "text-image",
+    "value": "Mis XV",
+    "img": "logo.png"
+  },
+  "media": {
+    "hero_background": "quinceañera.jpeg",
+    "presentacion": "princesa.svg",
+    "vestimenta_icon": "9.svg",
+    "galeria": [
+      "gallery1.jpeg",
+      "gallery2.jpeg",
+      "gallery3.jpeg",
+      "gallery4.jpeg",
+      "gallery5.jpeg",
+      "gallery6.jpeg"
+    ]
+  },
+  "audio": {
+    "enabled": true,
+    "src": "cancion.mp3",
+    "autoplay_on_open": true,
+    "loop": true,
+    "volume": 0.5,
+    "fade_in": true,
+    "icons": {
+      "play": "play.svg",
+      "pause": "pause.svg"
+    }
+  },
+  "opening": {
+    "enabled": true,
+    "phrase": {
+      "enabled": true,
+      "text": "Con mucha ilusión…",
+      "duration": 1400
+    },
+    "particles": {
+      "enabled": true,
+      "type": "sparkles",
+      "count": 14
+    },
+    "scroll_hint": {
+      "enabled": true,
+      "text": "Desliza para continuar"
+    }
+  },
+  "navbar": {
+    "enabled": true,
+    "logo": {
+      "use_global": true
+    },
+    "items": [
+      {
+        "id": "inicio",
+        "label": "Inicio",
+        "href": "#inicio"
+      },
+      {
+        "id": "ubicacion",
+        "label": "Lugar",
+        "href": "#ubicacion"
+      },
+      {
+        "id": "programa",
+        "label": "Programa",
+        "href": "#programa"
+      },
+      {
+        "id": "regalos",
+        "label": "Regalos",
+        "href": "#regalos"
+      },
+      {
+        "id": "vestimenta",
+        "label": "Vestimenta",
+        "href": "#vestimenta"
+      },
+      {
+        "id": "galeria",
+        "label": "Galería",
+        "href": "#galeria"
+      },
+      {
+        "id": "rsvp",
+        "label": "Asistencia",
+        "href": "#rsvp"
+      }
+    ]
+  },
+  "hero": {
+    "enabled": true,
+    "names": {
+      "festejada": "Mis XV Mia"
+    },
+    "countdown_labels": {
+      "dias": "Días",
+      "horas": "Horas",
+      "minutos": "Minutos",
+      "segundos": "Segundos"
+    }
+  },
+  "presentacion": {
+    "enabled": true,
+    "titulo": "Tengo el honor de invitarte a celebrar mis XV",
+    "nombres": "MIA",
+    "frase": "Con la bendición de Dios y en compañía de mis seres queridos:",
+    "padres": {
+      "festejada": ["Ángel Dávila León", "Carolina Portillo Domínguez"]
+    },
+    "padrinos": [
+      {
+        "nombre": "Karina Cortés Arreola"
+      },
+      {
+        "nombre": "Christian Ríos Domínguez"
+      },
+      {
+        "rol": "Mini Madrina",
+        "nombre": "Sienna Ríos Arreola"
+      }
+    ],
+    "texto_final": "Este día marca una nueva etapa en mi vida y me encantaría compartirlo contigo.",
+    "labels": {
+      "padres": "Mis Padres",
+      "padrinos": "Mis Padrinos"
+    }
+  },
+  "ubicacion": {
+    "enabled": true,
+    "titulo": "Fecha y Ubicacion",
+    "lugares": [
+      {
+        "enabled": false,
+        "tipo": "Ceremonia Religiosa",
+        "hora": "13:00 HRS",
+        "lugar": "Parroquia de la Santísima Trinidad Tepango",
+        "direccion": [
+          "C. 6 Sur 2,",
+          "La Trinidad Tepango,",
+          "74365 Atlixco, Pue."
+        ],
+        "mapa": "https://maps.app.goo.gl/HcezGWfbd4v5thhm7"
+      },
+      {
+        "enabled": true,
+        "tipo": "Ceremonia religiosa y Recepción",
+        "hora": "18:30 HRS",
+        "lugar": "Salón Provenza Los Girasoles",
+        "direccion": [
+          "Av. 5 de Mayo 1408,",
+          "San Juan Aquiahuac,",
+          "72810 San Andrés Cholula, Pue."
+        ],
+        "mapa": "https://maps.app.goo.gl/j4HP3cQPYyXTZ5LWA"
+      }
+    ]
+  },
+  "programa": {
+    "enabled": false,
+    "titulo": "Programa del Evento",
+    "progress_steps": [20, 40, 60, 80, 100],
+    "items": [
+      {
+        "hora": "18:30 hrs",
+        "texto": "Recepción",
+        "icono": "6.svg",
+        "lado": "right"
+      },
+      {
+        "hora": "19:30 hrs",
+        "texto": "Vals",
+        "icono": "8.svg",
+        "lado": "right"
+      },
+      {
+        "hora": "21:00 hrs",
+        "texto": "Tornamesa",
+        "icono": "7.svg",
+        "lado": "left"
+      }
+    ]
+  },
+  "vestimenta": {
+    "enabled": true,
+    "titulo": "Codigo de Vestimenta",
+    "formal": "FORMAL",
+    "nota": "El color rojo está reservado para la festejada",
+    "labels": {
+      "mujeres": "Mujeres",
+      "hombres": "Hombres"
+    },
+    "mujeres": "Formal / Colores vivos",
+    "hombres": "Formal / Traje oscuro con un toque de color",
+    "inspo": {
+      "text": "VER INSPIRACIÓN",
+      "url": "https://mx.pinterest.com/miadavporth/dress-code-xvs-mia/?invite_code=dc347fa7b62a4c4891564225db55d943&sender=870672677868674695"
+    }
+  },
+  "regalos": {
+    "enabled": true,
+    "titulo": "Sugerencia de Regalos",
+    "descripcion": "Tu presencia es el mejor regalo, pero si deseas tener un detalle conmigo, será bien recibido con mucho cariño.",
+    "items": [
+      {
+        "icono": "10.svg",
+        "label": "Lluvia de sobres"
+      }
+    ]
+  },
+  "galeria": {
+    "enabled": false,
+    "titulo": "Galería"
+  },
+  "rsvp": {
+    "enabled": true,
+    "mode": "panel",
+    "telefono": "522441183165",
+    "mensaje_base": "Hola, confirmo mi asistencia a los XV años de Mia.",
+    "fecha_limite": "2026-04-25",
+    "qr": {
+      "enabled": false
+    },
+    "titulo": "Confirmar asistencia",
+    "texto": "Por favor confirma tu asistencia",
+    "nota": "Te agradeceremos confirmar tu asistencia lo antes posible, o a más tardar antes del {{fecha_limite}}.",
+    "pase": {
+      "enabled": true,
+      "label": "Pase para"
+    },
+    "mesa": {
+      "enabled": false,
+      "label": "Mesa"
+    },
+    "botones": {
+      "si": "Sí, asistiré",
+      "no": "Lo siento, no podremos asistir"
+    },
+    "final": {
+      "titulo": "¡Gracias por confirmar tu asistencia!",
+      "texto": "Hemos reservado estos lugares en su honor.",
+      "firma": "Mis XV Mia"
+    }
+  },
+  "editorial": {
+    "hero": {
+      "enabled": false,
+      "text": "Hoy celebro una nueva etapa en mi vida"
+    },
+    "presentacion": {
+      "enabled": false,
+      "text": "Gracias a quienes me han acompañado siempre"
+    },
+    "ubicacion": {
+      "enabled": false,
+      "text": "El lugar donde todo sucederá"
+    },
+    "programa": {
+      "enabled": false,
+      "text": "Cada momento tiene su magia"
+    },
+    "vestimenta": {
+      "enabled": false,
+      "text": "Una noche para brillar"
+    },
+    "regalos": {
+      "enabled": false,
+      "text": "Lo más importante para mí es compartir este día contigo"
+    },
+    "galeria": {
+      "enabled": true,
+      "text": "Momentos que forman mi historia"
+    },
+    "rsvp": {
+      "enabled": false,
+      "text": "Acompáñanos en este día especial"
+    }
+  },
+  "footer": {
+    "enabled": true,
+    "text": "Diseñado con amor por"
+  }
+}

@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel RSVP</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="topbar">
+        <h1>Panel RSVP</h1>
+        <div class="right">
+          <span id="userName">Cargando usuario...</span>
+          <button id="btnLogout" class="btn btn-small btn-secondary">
+            Cerrar sesión
+          </button>
+        </div>
+      </div>
+      <div class="box">
+        <h2>Tus eventos</h2>
+        <div id="eventsContainer" class="grid grid-cards"></div>
+      </div>
+
+      <div id="invitadosSection" class="box hidden">
+        <h2 id="tituloEventoSeleccionado">Invitados del evento</h2>
+        <div
+          id="agregarInvitadoBox"
+          class="box"
+          style="padding: 16px; margin-top: 16px; background: #fafafa"
+        >
+          <h3 style="margin-top: 0">Agregar invitado</h3>
+
+<div class="form-grid">
+  <div>
+    <label>Nombre del invitado</label>
+    <input type="text" id="nuevoNombre" />
+  </div>
+
+  <div>
+    <label>Teléfono</label>
+    <input type="text" id="nuevoTelefono" />
+  </div>
+
+  <div>
+    <label>Número de pases</label>
+    <input type="number" id="nuevoPases" min="1" value="1" />
+  </div>
+</div>
+
+          <div style="margin-top: 16px">
+            <button id="btnAgregarInvitado" class="btn btn-primary">
+              Agregar invitado
+            </button>
+          </div>
+        </div>
+        <div class="filters">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar invitado..."
+          />
+          <select id="statusFilter">
+            <option value="">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="rechazado">Rechazado</option>
+          </select>
+        </div>
+
+        <div class="muted" id="resumenInvitados"></div>
+
+        <div style="margin-top: 16px">
+          <table class="table">
+<thead>
+  <tr>
+    <th>Invitado</th>
+    <th>Teléfono</th>
+    <th>Número de pases</th>
+    <th>Estado</th>
+    <th>Link</th>
+    <th>Acciones</th>
+  </tr>
+</thead>
+
+            <tbody id="tablaInvitados"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+      const API_BASE = "/api";
+
+      const userName = document.getElementById("userName");
+      const btnLogout = document.getElementById("btnLogout");
+      const eventsContainer = document.getElementById("eventsContainer");
+      const invitadosSection = document.getElementById("invitadosSection");
+      const tituloEventoSeleccionado = document.getElementById(
+        "tituloEventoSeleccionado",
+      );
+      const tablaInvitados = document.getElementById("tablaInvitados");
+      const resumenInvitados = document.getElementById("resumenInvitados");
+      const searchInput = document.getElementById("searchInput");
+      const statusFilter = document.getElementById("statusFilter");
+      const btnAgregarInvitado = document.getElementById("btnAgregarInvitado");
+      const nuevoNombre = document.getElementById("nuevoNombre");
+      const nuevoTelefono = document.getElementById("nuevoTelefono");
+      const nuevoPases = document.getElementById("nuevoPases");
+
+      let eventos = [];
+      let invitadosActuales = [];
+      let nombreEventoActual = "";
+      let idEventoActual = null;
+
+      function escapeHtml(text) {
+        if (text === null || text === undefined) return "";
+        return String(text)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function badgeEstado(estado) {
+        const est = (estado || "").toLowerCase();
+
+        if (est === "confirmado")
+          return `<span class="badge badge-success">Confirmado</span>`;
+        if (est === "rechazado")
+          return `<span class="badge badge-danger">Rechazado</span>`;
+        return `<span class="badge badge-warning">Pendiente</span>`;
+      }
+
+      async function validarSesion() {
+        try {
+          const res = await fetch(`${API_BASE}/auth/me.php`, {
+            method: "GET",
+            credentials: "include",
+          });
+
+          const data = await res.json();
+
+          if (!data.ok) {
+            window.location.href = "login.html";
+            return null;
+          }
+
+          userName.textContent = `Hola, ${data.data.nombre}`;
+          return data.data;
+        } catch (error) {
+          console.error(error);
+          window.location.href = "login.html";
+          return null;
+        }
+      }
+
+async function cargarDashboard() {
+  try {
+    const res = await fetch(`${API_BASE}/dashboard.php`, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    const text = await res.text();
+    console.log("Respuesta dashboard.php:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      eventsContainer.innerHTML = `<p>La API devolvió una respuesta inválida.</p>`;
+      return;
+    }
+
+    if (!data.ok) {
+      eventsContainer.innerHTML = `<p>${escapeHtml(data.message || "No se pudo cargar el dashboard")}</p>`;
+      return;
+    }
+
+    eventos = data.data || [];
+
+    if (!eventos.length) {
+      eventsContainer.innerHTML = `<p>No hay eventos registrados todavía.</p>`;
+      return;
+    }
+
+    eventsContainer.innerHTML = eventos.map(evento => `
+      <div class="event-card">
+        <h3>${escapeHtml(evento.nombre_evento)}</h3>
+        <div><strong>Slug:</strong> ${escapeHtml(evento.slug || "-")}</div>
+        <div><strong>Fecha:</strong> ${escapeHtml(evento.fecha_evento || "-")}</div>
+        <div><strong>Estatus:</strong> ${escapeHtml(evento.estatus || "-")}</div>
+
+            <div class="grid-stats">
+            
+            <div class="card-stat">
+              <div class="number">${Number(evento.total_invitados || 0)}</div>
+              <div>Total</div>
+            </div>
+
+            <div class="card-stat">
+              <div class="number">${Number(evento.confirmados || 0)}</div>
+              <div>Confirmados</div>
+            </div>
+
+            <div class="card-stat">
+              <div class="number">${Number(evento.rechazados || 0)}</div>
+              <div>Rechazados</div>
+            </div>
+
+            <div class="card-stat">
+              <div class="number">${Number(evento.pendientes || 0)}</div>
+              <div>Pendientes</div>
+            </div>
+
+          </div>
+
+        <button class="btn btn-secondary" onclick='verInvitados(${Number(evento.id_evento)}, ${JSON.stringify(evento.nombre_evento || "")})'>
+          Ver invitados
+        </button>
+      </div>
+    `).join("");
+
+  } catch (error) {
+    console.error(error);
+    eventsContainer.innerHTML = `<p>Error al cargar eventos.</p>`;
+  }
+}
+
+async function verInvitados(idEvento, nombreEvento) {
+  idEventoActual = idEvento;
+  nombreEventoActual = nombreEvento;
+
+  try {
+    const res = await fetch(`${API_BASE}/invitados_evento.php?id_evento=${idEvento}`, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    const text = await res.text();
+    console.log("Respuesta invitados_evento.php:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      alert("La API devolvió una respuesta inválida");
+      return;
+    }
+
+    if (!data.ok) {
+      alert(data.message || "No se pudieron cargar los invitados");
+      return;
+    }
+
+    invitadosActuales = data.data || [];
+    tituloEventoSeleccionado.textContent = `Invitados de: ${nombreEventoActual}`;
+    invitadosSection.classList.remove("hidden");
+    renderTabla();
+
+    invitadosSection.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  } catch (error) {
+    console.error(error);
+    alert("Error al cargar invitados");
+  }
+}
+
+      function renderTabla() {
+        const q = searchInput.value.trim().toLowerCase();
+        const estado = statusFilter.value;
+
+      const filtrados = invitadosActuales.filter(item => {
+          const coincideTexto =
+            (item.nombre || "").toLowerCase().includes(q) ||
+            (item.codigo_invitado || "").toLowerCase().includes(q) ||
+            (item.telefono || "").toLowerCase().includes(q) ||
+            (item.grupo_familiar || "").toLowerCase().includes(q);
+
+          const coincideEstado = !estado || item.estado_invitado === estado;
+
+          return coincideTexto && coincideEstado;
+        });
+
+        resumenInvitados.textContent = `${filtrados.length} invitado(s) mostrados de ${invitadosActuales.length}`;
+
+        if (!filtrados.length) {
+          tablaInvitados.innerHTML = `
+  <tr>
+    <td colspan="6">No se encontraron invitados.</td>
+  </tr>
+  `;
+          return;
+        }
+
+tablaInvitados.innerHTML = filtrados
+  .map(
+    (item) => `
+<tr>
+
+<td data-label="Invitado">
+  <strong>${escapeHtml(item.nombre)}</strong>
+</td>
+
+<td data-label="Teléfono">
+  ${escapeHtml(item.telefono || "-")}
+</td>
+
+<td data-label="Número de pases">
+  ${escapeHtml(item.pases ?? "-")}
+</td>
+
+<td data-label="Estado">
+  ${badgeEstado(item.estado_invitado)}
+</td>
+
+<td data-label="Link">
+  ${
+    item.link_personalizado
+      ? `
+        <div class="actions-cell">
+          <a href="${escapeHtml(item.link_personalizado)}" target="_blank">Abrir</a>
+          <button
+            class="btn btn-small btn-copy"
+            data-link="${escapeHtml(item.link_personalizado)}"
+            onclick="copiarLinkDesdeBoton(this)">
+            Copiar
+          </button>
+        </div>
+      `
+      : `<span class="muted">Sin link</span>`
+  }
+</td>
+
+<td data-label="Acciones">
+  <div class="actions-cell">
+    <button class="btn btn-small btn-edit" onclick="editarInvitado(${Number(item.id_invitado)})">
+      Editar
+    </button>
+  </div>
+</td>
+
+</tr>
+`,
+  )
+  .join("");
+      }
+      function verMensaje(mensaje) {
+        alert(mensaje);
+      }
+      async function copiarLinkDesdeBoton(btn) {
+  const link = btn.getAttribute("data-link") || "";
+
+  if (!link) {
+    alert("Este invitado no tiene link personalizado");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(link);
+    alert("Link copiado");
+  } catch (error) {
+    console.error(error);
+    prompt("Copia este link:", link);
+  }
+}
+
+async function editarInvitado(idInvitado) {
+  const item = invitadosActuales.find(
+    (x) => Number(x.id_invitado) === Number(idInvitado),
+  );
+
+  if (!item) {
+    alert("Invitado no encontrado");
+    return;
+  }
+
+  const pases = prompt("Número de pases", item.pases ?? 1);
+  if (pases === null) return;
+
+  const pasesNum = parseInt(pases, 10);
+
+  if (isNaN(pasesNum) || pasesNum < 1) {
+    alert("El número de pases debe ser mínimo 1");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/invitado_editar.php`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        id_invitado: idInvitado,
+        pases: pasesNum
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      alert(data.message || "No se pudo editar el invitado");
+      return;
+    }
+
+    alert("Invitado actualizado correctamente");
+    await verInvitados(idEventoActual, nombreEventoActual);
+  } catch (error) {
+    console.error(error);
+    alert("Error al editar invitado");
+  }
+}
+
+      btnLogout.addEventListener("click", async function () {
+        try {
+          const res = await fetch(`${API_BASE}/auth/logout.php`, {
+            method: "POST",
+            credentials: "include",
+          });
+
+          const data = await res.json();
+
+          if (data.ok) {
+            window.location.href = "login.html";
+            return;
+          }
+
+          alert(data.message || "No se pudo cerrar sesión");
+        } catch (error) {
+          console.error(error);
+          alert("Error al cerrar sesión");
+        }
+      });
+
+btnAgregarInvitado.addEventListener("click", async function () {
+  if (!idEventoActual) {
+    alert("Primero selecciona un evento");
+    return;
+  }
+
+  const pases = parseInt(nuevoPases.value || "1", 10);
+
+  const payload = {
+    id_evento: idEventoActual,
+    nombre: nuevoNombre.value.trim(),
+    telefono: nuevoTelefono.value.trim(),
+    pases: pases,
+    acompanantes_permitidos: pases
+  };
+
+  if (!payload.nombre) {
+    alert("Escribe el nombre del invitado");
+    return;
+  }
+
+  if (isNaN(pases) || pases < 1) {
+    alert("El número de pases debe ser mínimo 1");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/invitado_crear.php`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (!data.ok) {
+      alert(data.message || "No se pudo agregar el invitado");
+      return;
+    }
+
+    alert("Invitado agregado correctamente");
+
+    nuevoNombre.value = "";
+    nuevoTelefono.value = "";
+    nuevoPases.value = "1";
+
+    await verInvitados(idEventoActual, nombreEventoActual);
+  } catch (error) {
+    console.error(error);
+    alert("Error al agregar invitado");
+  }
+});
+
+      searchInput.addEventListener("input", renderTabla);
+      statusFilter.addEventListener("change", renderTabla);
+
+window.verInvitados = verInvitados;
+window.copiarLinkDesdeBoton = copiarLinkDesdeBoton;
+window.editarInvitado = editarInvitado;
+window.verMensaje = verMensaje;
+
+      (async function init() {
+      const user = await validarSesion();
+      if (!user) return;
+        await cargarDashboard();
+      })();
+    </script>
+  </body>
+</html>

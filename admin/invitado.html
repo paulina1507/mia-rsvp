@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Confirmar asistencia</title>
+  </head>
+  <body>
+    <div class="card">
+      <h1 id="evento"></h1>
+
+      <p id="info" class="subtitle"></p>
+
+      <form id="rsvpForm">
+        <label>¿Asistirás?</label>
+        <select id="asistencia">
+          <option value="si">Sí asistiré</option>
+          <option value="no">No podré asistir</option>
+        </select>
+
+        <br />
+
+        <label>Cantidad de personas</label>
+        <input type="number" id="cantidad" min="1" />
+
+        <br />
+
+        <label>Mensaje</label>
+        <textarea id="mensaje"></textarea>
+
+        <br />
+
+        <button type="submit" class="btn">Confirmar asistencia</button>
+      </form>
+
+      <div id="resultado" class="muted" style="margin-top: 12px"></div>
+    </div>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const codigo = urlParams.get("codigo");
+
+      let invitadoData = null;
+
+      async function cargarInvitado() {
+        const res = await fetch(
+          `http://localhost/events-api/api/invitado.php?codigo=${codigo}`,
+        );
+
+        const data = await res.json();
+
+        if (!data.ok) {
+          document.body.innerHTML = "Invitado no encontrado";
+          return;
+        }
+
+        invitadoData = data.data;
+
+        document.getElementById("evento").innerText =
+          invitadoData.nombre_evento;
+
+        document.getElementById("info").innerHTML = `
+Invitado: ${invitadoData.nombre} <br>
+Pases: ${invitadoData.pases}
+`;
+
+        document.getElementById("cantidad").max = invitadoData.pases;
+      }
+
+      cargarInvitado();
+
+      document
+        .getElementById("rsvpForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const payload = {
+            id_evento: invitadoData.id_evento,
+            id_invitado: invitadoData.id_invitado,
+            asistencia: document.getElementById("asistencia").value,
+            cantidad_confirmada: document.getElementById("cantidad").value,
+            mensaje: document.getElementById("mensaje").value,
+          };
+
+          const res = await fetch("http://localhost/events-api/api/rsvp.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await res.json();
+
+          document.getElementById("resultado").innerText = data.message;
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2837 @@
+/* ========================================================= */
+/*  COLORES ROOT + TIPOGRAFÍA BASE                      */
+/* ========================================================= */
+@font-face {
+  font-family: "Gistesy";
+  src: url("../fonts/Gistesy.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-img {
+  width: 60px;
+  height: auto;
+}
+
+:root {
+  /* =========================================================
+     1. BASE (NO TOCAR)
+  ========================================================= */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* =========================================================
+     2. PALETA PRINCIPAL (IDENTIDAD)
+  ========================================================= */
+  --bg-main: #0d1b2a;
+  --bg-soft: #2d3f62;
+
+  --gold-main: #d4af37;
+  --gold-soft: #f1e5ac;
+
+  --accent-main: #b91c1c;
+  --accent-strong: #7f1d1d;
+  --accent-soft: rgba(185, 28, 28, 0.15);
+
+  /* =========================================================
+     3. TEXTO (SEMÁNTICO)
+  ========================================================= */
+  --text-primary: #eaeaea;
+  --text-secondary: #ffffff;
+  --text-muted: #9ca3af;
+
+  /* =========================================================
+     4. SUPERFICIES
+  ========================================================= */
+  --surface-base: rgba(255, 255, 255, 0.05);
+  --surface-light: rgba(255, 255, 255, 0.6);
+  --surface-glass: rgba(255, 255, 255, 0.55);
+
+  /* =========================================================
+     5. COMPONENTES
+  ========================================================= */
+  --nav-bg: rgba(13, 27, 42, 0.85);
+  --arco-bg: var(--surface-base);
+  --envelope-bg: var(--bg-soft);
+
+  /* =========================================================
+     6. EFECTOS
+  ========================================================= */
+  --glow-gold: rgba(212, 175, 55, 0.35);
+  --glow-accent: rgba(185, 28, 28, 0.35);
+
+  --shadow-main: 0 18px 38px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 10px 34px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background: url("../img/fondo.webp") no-repeat center center;
+  background-size: cover;
+
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-size: cover;
+    background-position: center top;
+  }
+
+  #rsvp-form-title {
+    margin-top: 20px;
+  }
+}
+
+body.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+}
+
+h4 {
+  color: var(--white);
+}
+
+#vestimenta h4 {
+  color: var(--black);
+}
+
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+p,
+span,
+small,
+.arco-grupo-titulo,
+.arco-grupo-lista,
+.arco-frase,
+.arco-nombres {
+  color: var(--text-primary);
+}
+
+/* ========================================================= */
+/* ICONOS BLANCOS GLOBAL (EXCEPTO REDES)                    */
+/* ========================================================= */
+
+/* TODOS los iconos (img/svg) */
+img.icon,
+.icon img,
+.icon,
+.timeline-programa .icon,
+.regalo-icon,
+.vestimenta-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* ========================= */
+/* EXCEPCIÓN: REDES          */
+/* ========================= */
+
+/* evita que los iconos de redes se vuelvan blancos */
+.footer-links img,
+.footer-links .icon,
+.footer-links a img {
+  filter: none !important;
+}
+
+body.content-ready .navbar {
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+.site-root {
+  position: relative;
+  inset: auto;
+}
+
+body.content-ready .site-root {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.site-root.hero-ready .hero-bg {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.site-root.hero-ready .hero-names {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.site-root.hero-ready .hero-count {
+  opacity: 1;
+}
+
+.reveal > * {
+  transition-delay: calc(var(--i, 0) * 0.08s);
+}
+
+.editorial-text {
+  max-width: 420px;
+  margin: 0 auto 36px;
+  text-align: center;
+
+  font-family: "Playfair Display", serif;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.6;
+
+  color: var(--white);
+
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.editorial-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================================= */
+/*  NAVBAR                                                    */
+/* ========================================================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--nav-bg);
+  padding: 12px 0;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+/* cuando el contenido está listo */
+body.content-ready .navbar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-inner {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav-menu a:hover {
+  color: var(--accent-main);
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 70% 30%,
+    var(--color-accent-soft),
+    transparent 60%
+  );
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 28px;
+  color: var(--white);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 0;
+    background: var(--accent-main);
+    gap: 18px;
+  }
+  .nav-menu.open {
+    display: flex;
+  }
+  .nav-menu a {
+    font-size: 18px;
+  }
+}
+
+.intro-phrase {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 320px;
+  text-align: center;
+
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.6;
+  color: rgba(46, 46, 46, 0.75);
+
+  opacity: 0;
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 90;
+}
+
+@keyframes introFade {
+  0% {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  30% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+/* ========================================================= */
+/* HERO */
+/* ========================================================= */
+.hero-faltan{
+  color: var(--white);
+  margin-bottom: 10px;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.9),
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 215, 0, 0.4);
+}
+.hero-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  z-index: 50;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  filter: brightness(0.85);
+  z-index: -1;
+  opacity: 0;
+  filter: blur(8px);
+  transition:
+    opacity 1.2s ease,
+    filter 1.2s ease;
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 0;
+}
+
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-info::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--gold-soft),
+    transparent
+  );
+  margin: 12px auto 8px;
+}
+
+.hero-title,
+.hero-name {
+  display: block;
+}
+
+.hero-names {
+  font-family: "Gistesy", cursive;
+  font-size: clamp(34px, 7vw, 78px);
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  background: linear-gradient(
+    120deg,
+    #7a5a1f 15%,
+    #fff2b8 35%,
+    #998304 50%,
+    #fff2b8 65%,
+    #7a5a1f 85%
+  );
+
+  background-size: 250% auto;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-shadow:
+    0 0 15px rgba(255, 215, 0, 0.8),    /* dorado fuerte */
+    0 0 35px rgba(255, 215, 0, 0.5),    /* glow medio */
+    0 0 70px rgba(255, 215, 0, 0.25);   /* halo exterior */
+
+    animation: shine 7s linear infinite;
+  }
+
+@keyframes shine {
+  0% {
+    background-position: -250% center;
+  }
+  100% {
+    background-position: 250% center;
+  }
+}
+
+.card {
+  width: min(85%, 400px);
+  margin: 0 auto;
+  padding: 18px;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  box-shadow: var(--shadow-main);
+  position: relative;
+  overflow: visible;
+  text-align: center;
+  z-index: 10;
+  transition: transform 0.35s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 27, 42, 0.35) 0%,
+    rgba(13, 27, 42, 0.55) 100%
+  );
+
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-count {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  animation-delay: 0.25s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+  animation: heroFadeIn 1.6s ease forwards 0.9s;
+}
+
+.hero-count div span {
+  font-size: clamp(16px, 3.8vw, 26px);
+  font-weight: 500;
+  color: var(--gold-main);
+  letter-spacing: 1px;
+}
+
+.hero-count small {
+  display: block;
+  margin-top: 6px;
+
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  opacity: 0.85;
+
+  font-weight: 500;
+}
+
+.sep {
+  font-size: 14px;
+  opacity: 0.45;
+  color: var(--gold-soft);
+  font-weight: 300;
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 92%; /* 👈 más grande */
+    max-width: 420px; /* 👈 no se descontrole en pantallas grandes */
+  }
+
+  .hero-count {
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 0 10px;
+  }
+}
+
+/* Animación */
+@keyframes heroFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes iconReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.92);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ANIMACIÓN DE CAÍDA SUAVE DEL SOBRE */
+@keyframes envelopeDrop {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) scale(0.94);
+    opacity: 0;
+  }
+}
+
+/* ========================================================= */
+/* ARCO PRESENTACIÓN – versión premium y alineada */
+/* ========================================================= */
+.section-arco {
+  padding: 80px 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: visible; /* FIX */
+  width: 100%;
+}
+/* ========================================================= */
+/* ARCO BASE REFINADO */
+/* ========================================================= */
+.arco-base {
+  width: 430px;
+  min-height: 680px;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  box-shadow: var(--shadow-main);
+  border-radius: 260px 260px 0 0;
+  padding: 90px 40px 80px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  z-index: 10;
+}
+
+.arco-base::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 27, 42, 0.35) 0%,
+    rgba(13, 27, 42, 0.55) 100%
+  );
+
+  z-index: 0;
+}
+
+.padrino-item {
+  margin-bottom: 12px;
+}
+
+.padrino-rol {
+  font-size: 1rem; /* puedes ajustarlo si quieres igual exacto */
+  margin: 0;
+}
+
+.padrino-nombre {
+  display: block;
+}
+
+.arco-title {
+  font-family: "Gistesy";
+  font-size: 40px;
+  color: var(--text-primary);
+  margin-bottom: 25px;
+  padding: 0 12px;
+  line-height: 1.2;
+  display: block;
+}
+
+.arco-grupo,
+.arco-frase,
+.arco-bottom {
+  text-align: center !important;
+}
+
+.arco-nombres {
+  font-weight: bold;
+  text-align: center !important;
+}
+
+.arco-grupo-lista {
+  text-align: center !important;
+  margin-bottom: 12px;
+}
+
+/* ========================================================= */
+/* HERO DENTRO DE ARCO                                       */
+/* ========================================================= */
+
+.hero-arco {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arco-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 🔥 centra vertical */
+  align-items: center;
+
+  width: 430px;
+  height: 680px;
+  position: relative;
+  overflow: hidden;
+
+  /* 🔑 FORMA DE ARCO */
+  border-radius: 260px 260px 0 0;
+
+  background: none;
+  box-shadow: var(--shadow-main);
+}
+
+.arco-base.arco-hero {
+  background: transparent !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+
+  width: 430px;
+  height: 640px;
+  border-radius: 260px 260px 0 0;
+  box-shadow: var(--shadow-main);
+  position: relative;
+}
+
+.arco-hero .hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* degradado elegante */
+.arco-hero .hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 105, 180, 0.5) 0%,
+    rgba(255, 182, 193, 0.1) 30%,
+    rgba(255, 182, 193, 0.1) 70%,
+    rgba(255, 105, 180, 0.55) 100%
+  );
+}
+
+/* contenido encima */
+.arco-hero .hero-names,
+.arco-hero .hero-count {
+  position: relative;
+  z-index: 2;
+}
+
+.arco-hero .hero-count {
+  margin-top: 30px;
+}
+
+@media (max-width: 480px) {
+  .arco-hero {
+    width: 86%;
+    max-width: 320px;
+    height: 560px;
+    border-radius: 200px 200px 0 0;
+  }
+
+  .arco-hero .hero-names {
+    margin-top: 180px;
+  }
+}
+
+.hero-bg {
+  inset: auto;
+}
+
+@media (max-width: 768px) {
+  .hero-names {
+    font-size: clamp(75px, 12vw, 75px);
+    letter-spacing: 0.5px;
+  }
+
+  /* CONTADOR MÁS LEGIBLE */
+  .hero-count div span {
+    font-size: clamp(26px, 9vw, 26px);
+    font-weight: 600;
+  }
+
+  .hero-count small {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .sep {
+    font-size: 24px;
+  }
+}
+
+/* ========================================================= */
+/* FIX REAL: HERO EN ARCO                                    */
+/* ========================================================= */
+
+.arco-base.arco-hero {
+  background: transparent !important; /* ❌ elimina rectángulo rosa */
+  overflow: hidden !important; /* 🔑 activa el recorte real */
+  padding: 0 !important; /* el hero maneja su espacio */
+}
+
+.acuarela-left,
+.acuarela-right {
+  position: absolute;
+  width: clamp(220px, 28vw, 360px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* IZQUIERDA */
+.acuarela-left {
+  bottom: -20px;
+  left: -10%;
+  transform: rotate(-4deg);
+}
+
+/* DERECHA */
+.acuarela-right {
+  top: -20px;
+  right: -10%;
+  transform: rotate(6deg);
+}
+
+@media (max-width: 480px) {
+  /* ACUARELAS EXTERNAS */
+  .acuarela-left,
+  .acuarela-right {
+    width: 200px;
+  }
+
+  .acuarela-left {
+    left: -20%;
+    bottom: -20px;
+  }
+
+  .acuarela-right {
+    right: -20%;
+    top: -20px;
+  }
+}
+.section-arco,
+.hero-section {
+  position: relative;
+}
+
+/* ================= REVEAL GLOBAL (SISTEMA UNIFICADO) ================= */
+
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-zoom {
+  opacity: 0;
+
+  --r-x: 0;
+  --r-y: 0;
+  --r-scale: 1;
+
+  transform: translate3d(var(--r-x), var(--r-y), 0) scale(var(--r-scale));
+
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+  transition-delay: var(--delay, 0ms);
+
+  will-change: opacity, transform;
+}
+
+/* variantes */
+
+.reveal-left {
+  --r-x: -60px;
+  --r-y: 0;
+}
+
+.reveal-right {
+  --r-x: 60px;
+  --r-y: 0;
+}
+
+.reveal-zoom {
+  --r-y: 0;
+  --r-scale: 0.88;
+}
+
+/* visible */
+
+.reveal.visible,
+.reveal-left.visible,
+.reveal-right.visible,
+.reveal-zoom.visible {
+  opacity: 1;
+
+  --r-x: 0;
+  --r-y: 0;
+  --r-scale: 1;
+}
+/* ========================================================= */
+/* MARIPOSAS FUERA DEL ARCO – PRESENTACIÓN (FINAL)           */
+/* ========================================================= */
+
+/* Sección como contenedor real */
+#presentacion.section-arco {
+  position: relative;
+  overflow: visible;
+  min-height: 920px; /* aire vertical real */
+}
+
+/* El arco SIEMPRE encima */
+#presentacion .arco-base {
+  position: relative;
+  z-index: 10;
+}
+
+/* CONTENEDOR */
+.butterflies {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* BASE */
+.butterfly {
+  position: absolute;
+  width: 72px;
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: drift 9s ease-in-out infinite;
+}
+
+.butterfly img {
+  animation: flutter 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 0 10px var(--glow-gold));
+  transform-origin: center;
+}
+
+.butterfly-left {
+  --r: -12deg;
+  top: 200px;
+  left: 4%;
+  transform: rotate(var(--r));
+  animation: drift 10s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+.butterfly-right {
+  animation: drift 9s ease-in-out infinite;
+  animation-delay: -5s;
+  --r: 14deg;
+  bottom: -30px;
+  right: 4%;
+  transform: rotate(var(--r));
+}
+
+@keyframes flutter {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.04);
+  }
+
+  50% {
+    transform: scale(1.07);
+  }
+
+  75% {
+    transform: scale(1.04);
+  }
+}
+
+/* ANIMACIÓN */
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(var(--r));
+  }
+
+  20% {
+    transform: translate(18px, -22px) rotate(calc(var(--r) + 6deg));
+  }
+
+  40% {
+    transform: translate(-12px, -40px) rotate(calc(var(--r) - 6deg));
+  }
+
+  60% {
+    transform: translate(22px, -32px) rotate(calc(var(--r) + 4deg));
+  }
+
+  80% {
+    transform: translate(-10px, -14px) rotate(calc(var(--r) - 3deg));
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(var(--r));
+  }
+}
+
+@media (max-width: 480px) {
+  .butterfly-left {
+    --r: -12deg;
+    top: 30px;
+    left: 2%;
+    transform: rotate(var(--r));
+  }
+
+  .butterfly-right {
+    --r: 14deg;
+    bottom: -20px;
+    right: 2%;
+    transform: rotate(var(--r));
+  }
+}
+/* ========================================================= */
+/* PRESENTACIÓN  */
+/* ========================================================= */
+.arco-grupo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.arco-grupo-titulo {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.arco-grupo-lista {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.arco-frase {
+  margin-bottom: 28px;
+}
+
+.arco-nombres {
+  margin-bottom: 16px;
+}
+
+.arco-img img {
+  width: 150px;
+  margin: 28px auto;
+  display: block;
+}
+@media (max-width: 480px) {
+  .arco-base {
+    width: 86%;
+    max-width: 320px;
+    min-height: 580px;
+    padding: 70px 28px 65px;
+    border-radius: 200px 200px 0 0;
+  }
+
+  .arco-title {
+    font-size: 38px;
+  }
+
+  .arco-nombres {
+    font-size: 18px;
+  }
+
+  .arco-img img {
+    width: 120px;
+  }
+}
+
+/* ========================================================= */
+/* UBICACIÓN – CONTENEDOR REAL                               */
+/* ========================================================= */
+
+#ubicacion-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 130px; /* ← AQUÍ se controla el espacio entre tarjetas */
+  position: relative;
+  z-index: 5;
+}
+
+/* ========================================================= */
+/* TARJETAS DE UBICACIÓN                                     */
+/* ========================================================= */
+
+.ubicacion-card {
+  background: var(--surface-light);
+  padding: 36px 32px;
+  border-radius: 26px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* Divisor elegante entre tarjetas */
+.ubicacion-card:not(:last-child)::after {
+  content: "";
+  display: block;
+  width: 58%;
+  height: 1.5px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 80px auto 0;
+}
+
+/* ========================================================= */
+/* FECHA GENERAL – UBICACIÓN              */
+/* ========================================================= */
+
+#ubicacion-fecha-general {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 40px;
+  z-index: 6;
+}
+
+.fecha-wrapper {
+  padding: 10px 28px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.fecha-dia {
+  display: block;
+  font-family: "Gistesy", cursive;
+  font-size: 38px;
+  color: var(--bg-main);
+  text-transform: capitalize;
+  line-height: 1.1;
+}
+
+.fecha-completa {
+  display: block;
+  margin-top: 4px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px; /* 👈 bajamos un poquito */
+  letter-spacing: 2px; /* 👈 más elegante */
+  text-transform: uppercase;
+  color: var(--bg-soft); /* 👈 más profundo */
+  font-weight: 500; /* 👈 clave premium */
+}
+
+@media (max-width: 480px) {
+  .fecha-wrapper {
+    padding: 10px 20px 10px;
+  }
+
+  .fecha-completa {
+    font-size: 18px; /* 👈 bajamos leve */
+    letter-spacing: 1px; /* 👈 subimos un poco para elegancia */
+    font-weight: 500;
+  }
+}
+/* ========================================================= */
+/* CONTENIDO INTERNO                                         */
+/* ========================================================= */
+
+.ubicacion-subtitle {
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 14px;
+}
+
+.ubicacion-hora {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 22px;
+}
+
+.ubicacion-lugar {
+  font-family: "Playfair Display";
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--bg-soft);
+  margin-bottom: 14px;
+}
+
+.ubicacion-direccion {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--black);
+  margin-bottom: 30px;
+}
+
+.btn-ubicacion {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-main), var(--accent-strong));
+  color: var(--white);
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+  text-decoration: none; /* 👈 esto quita el subrayado */
+}
+
+.btn-ubicacion:hover {
+  transform: translateY(-2px) scale(1.03);
+
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold-main));
+  color: var(--black);
+  box-shadow:
+    0 12px 28px rgba(185, 28, 28, 0.35),
+    0 0 12px var(--glow-accent);
+}
+/* ========================================================= */
+/* RESPONSIVE                                                */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+  /* Espacio entre tarjetas */
+  #ubicacion-lista {
+    gap: 70px; /* antes 80px */
+  }
+
+  /* Tarjeta */
+  .ubicacion-card {
+    padding: 28px 22px; /* más ligera */
+    border-radius: 22px;
+  }
+
+  /* Tipo de evento */
+  .ubicacion-subtitle {
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    margin-bottom: 12px;
+  }
+
+  /* Hora */
+  .ubicacion-hora {
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  /* Lugar */
+  .ubicacion-lugar {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  /* Dirección */
+  .ubicacion-direccion {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 26px;
+  }
+
+  /* Botón */
+  .btn-ubicacion {
+    font-size: 13px;
+    padding: 11px 28px;
+  }
+
+  /* Divisor */
+  .ubicacion-card:not(:last-child)::after {
+    width: 65%;
+    margin: 50px auto 0;
+  }
+}
+
+/* ========================================================= */
+/* PROGRAMA – TIMELINE (PC + MÓVIL | FIX DEFINITIVO)          */
+/* ========================================================= */
+
+.timeline-programa {
+  --progress: 0%;
+  position: relative;
+  padding: 4rem 0 6rem;
+  min-height: 420px;
+}
+
+/* ========================================================= */
+/* LÍNEA BASE (GRIS)                                         */
+/* ========================================================= */
+
+.timeline-programa::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: 0;
+
+  background-color: var(--accent-soft);
+}
+
+/* ========================================================= */
+/* LÍNEA ACTIVA (DORADO SEGÚN SCROLL)                         */
+/* ========================================================= */
+
+.timeline-programa::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: var(--progress);
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+
+  background: linear-gradient(to bottom, var(--accent-main));
+
+  box-shadow:
+    0 0 6px rgba(255, 0, 0, 0.45),
+    0 0 12px rgba(255, 0, 0, 0.25);
+
+  transition: height 0.05s linear;
+}
+
+/* ========================================================= */
+/* ITEMS                                                     */
+/* ========================================================= */
+
+.timeline-programa .item {
+  position: relative;
+  margin: 3.5rem 0;
+  z-index: 2;
+
+  opacity: 0.35;
+  transform: translateY(22px);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.timeline-programa .item.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================================= */
+/* PUNTO (GRIS POR DEFECTO)                                  */
+/* ========================================================= */
+
+.timeline-programa .item::before {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+
+  background: var(--accent-main);
+  border-radius: 50%;
+
+  transform: translateX(-50%) scale(0.85);
+  opacity: 0.5;
+
+  transition:
+    background 0.35s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    opacity 0.35s ease;
+
+  z-index: 3;
+}
+
+/* ========================================================= */
+/* PUNTO ENCENDIDO (DORADO SOLO CUANDO LA LÍNEA LO TOCA)     */
+/* ========================================================= */
+
+.timeline-programa .item.lit::before {
+  background: linear-gradient(145deg, var(--accent-main));
+  opacity: 1;
+  transform: translateX(-50%) scale(1.35);
+  box-shadow:
+    0 0 12px rgba(212, 99, 99, 0.9),
+    0 0 24px rgba(255, 0, 0, 0.45);
+}
+
+/* ========================================================= */
+/* ICONOS                                                    */
+/* ========================================================= */
+
+.timeline-programa .icon {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 6px;
+
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+
+  transition:
+    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.35s ease;
+}
+
+.timeline-programa .item.active .icon {
+  animation: iconReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@media (hover: hover) {
+  .timeline-programa .item:hover .icon {
+    transform: translateY(-6px) rotate(-2deg);
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.15));
+  }
+}
+
+/* ========================================================= */
+/* POSICIONES DESKTOP                                        */
+/* ========================================================= */
+
+.timeline-programa .item.left {
+  text-align: right;
+  padding-right: 22px;
+}
+
+.timeline-programa .item.left .icon {
+  margin-left: auto;
+}
+
+.timeline-programa .item.right {
+  text-align: left;
+  padding-left: 22px;
+}
+
+.timeline-programa .item.right .icon {
+  margin-right: auto;
+}
+
+.timeline-programa .hora {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.timeline-programa .texto {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* ========================================================= */
+/* RESPONSIVE                                                */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+  .timeline-programa {
+    padding: 3.5rem 0 5.5rem;
+  }
+
+  .timeline-programa .item {
+    margin: 3.2rem 0;
+  }
+
+  .timeline-programa .icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .timeline-programa .hora {
+    font-size: 14px;
+  }
+
+  .timeline-programa .texto {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* mover la línea un poco a la izquierda */
+  .timeline-programa::before {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+  }
+
+  /* los items ocupan todo el ancho */
+  .timeline-programa .item {
+    width: 100%;
+    padding: 0;
+  }
+
+  /* empuje REAL de contenido */
+  .timeline-programa .item.left {
+    padding-right: 10rem;
+    text-align: right;
+  }
+
+  .timeline-programa .item.right {
+    padding-left: 10rem;
+    text-align: left;
+  }
+
+  /* iconos más alejados de la línea */
+  .timeline-programa .icon {
+    margin-bottom: 0.6rem;
+  }
+
+  /* textos respiran */
+  .timeline-programa .hora,
+  .timeline-programa .texto {
+    max-width: 90%;
+  }
+}
+
+/* ========================================================= */
+/* VESTIMENTA                     */
+/* ========================================================= */
+
+#vestimenta {
+  text-align: center;
+  color: var(--black);
+}
+
+/* ANIMACIONES */
+#vestimenta .vestimenta-formal,
+#vestimenta .v-label,
+#vestimenta .v-content,
+#vestimenta .nota {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+#vestimenta.reveal.visible .vestimenta-formal,
+#vestimenta.reveal.visible .v-label,
+#vestimenta.reveal.visible .v-content,
+#vestimenta.reveal.visible .nota {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* NOTA */
+.nota {
+  margin-top: 20px;
+  font-size: clamp(15px, 3vw, 20px); /* 👈 más grande y responsive */
+  color: var(--black);
+  font-weight: 800; /* 👈 negrita fuerte */
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: 0.8px;
+}
+
+/* ICONO */
+.vestimenta-icon {
+  width: 300px;
+  margin: 26px auto 18px;
+  display: block;
+
+  opacity: 0;
+  transform: translateY(22px) scale(0.96);
+
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.4s ease;
+
+  transition-delay: 0.2s;
+}
+
+#vestimenta.reveal.visible .vestimenta-icon {
+  animation: iconReveal 1s ease forwards;
+}
+
+/* FORMAL */
+.vestimenta-formal {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+/* CONTENEDOR DE BLOQUES */
+.vestimenta-group {
+  margin: 22px 0;
+}
+
+/* LABELS */
+.v-label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--black);
+}
+
+/* CONTENIDO */
+.v-content {
+  font-size: 15px;
+}
+
+#vestimenta-mujeres,
+#vestimenta-hombres {
+  color: var(--black);
+  line-height: 1.4;
+}
+
+/* BOTÓN */
+#vestimenta-inspo {
+  display: inline-block;
+  margin: 20px auto 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .vestimenta-icon {
+    width: 260px;
+    margin: 20px auto 12px;
+  }
+
+  .vestimenta-formal {
+    font-size: 18px;
+  }
+
+  .v-content {
+    font-size: 14px;
+  }
+}
+/* ========================================================= */
+/* REGALOS                  */
+/* ========================================================= */
+
+#regalos {
+  text-align: center;
+}
+
+.regalos-desc {
+  font-size: 15px;
+  max-width: 380px;
+  margin: 0 auto 34px;
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+#regalos.reveal.visible .regalos-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.regalos-container {
+  text-align: center;
+}
+
+.regalo-item {
+  margin-bottom: 32px;
+
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+
+  transition:
+    opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.4s ease;
+
+  will-change: transform;
+}
+
+#regalos.reveal.visible .regalo-item {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#regalos.reveal.visible .regalo-item:nth-child(1) {
+  transition-delay: 0.15s;
+}
+#regalos.reveal.visible .regalo-item:nth-child(2) {
+  transition-delay: 0.3s;
+}
+#regalos.reveal.visible .regalo-item:nth-child(3) {
+  transition-delay: 0.45s;
+}
+#regalos.reveal.visible .regalo-item:nth-child(4) {
+  transition-delay: 0.6s;
+}
+
+.regalo-icon {
+  width: clamp(70px, 18vw, 95px);
+  display: block;
+  margin: 0 auto 10px;
+}
+
+/* TEXTO */
+.regalo-label {
+  font-size: clamp(15px, 3.6vw, 19px);
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+@media (hover: hover) {
+  .regalo-item:hover {
+    transform: translateY(-6px) scale(1.03);
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.16));
+  }
+}
+
+@media (max-width: 480px) {
+  .regalo-item {
+    margin-bottom: 26px;
+  }
+}
+
+/* ========================================================= */
+/* GALERÍA */
+/* ========================================================= */
+.carousel {
+  width: 100%;
+  max-width: 360px;
+  height: 520px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(228, 145, 166, 0.5); /* rosa suave */
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 240, 245, 0.9),
+    rgba(255, 192, 203, 0.4)
+  );
+
+  backdrop-filter: blur(10px);
+
+  color: #d94c8a; /* rosa fuerte elegante */
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.2),
+    0 0 12px rgba(228, 145, 166, 0.35);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  transform: translateY(-50%) scale(1.12);
+
+  background: linear-gradient(145deg, #ffe4ec, #f7a1c4);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    0 0 18px rgba(228, 145, 166, 0.6);
+}
+
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-btn.left {
+  left: 9px;
+}
+
+.carousel-btn.right {
+  right: 9px;
+}
+
+@media (max-width: 480px) {
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+
+    box-shadow:
+      0 6px 14px rgba(0, 0, 0, 0.18),
+      0 0 8px rgba(228, 145, 166, 0.3);
+  }
+
+  .carousel-btn.left {
+    left: 6px;
+  }
+
+  .carousel-btn.right {
+    right: 6px;
+  }
+}
+/* ========================================================= */
+/* FOOTER */
+
+footer.site-footer {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 14px 0;
+  text-align: center;
+  background: var(--nav-bg);
+  color: var(--white);
+  z-index: 99999;
+
+  opacity: 0;
+  transform: translateY(40px);
+  pointer-events: none;
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.site-footer small {
+  opacity: 0.9;
+}
+
+body.footer-ready footer.site-footer {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-links img {
+  width: 22px;
+  height: 22px;
+
+  filter: brightness(0) invert(1); /* los vuelve blancos */
+  opacity: 0.85;
+
+  transition:
+    filter 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* hover */
+.footer-links a:hover img {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.footer-brand {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+/* hover */
+.footer-brand:hover {
+  color: var(--gold);
+
+  transform: translateY(-2px) scale(1.05);
+}
+
+@media (max-width: 480px) {
+  .site-footer {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .footer-links {
+    gap: 10px;
+  }
+
+  .footer-links img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .footer-brand {
+    font-size: 15px;
+  }
+
+  .footer-brand:active {
+    transform: translateY(-1px) scale(1.03);
+  }
+}
+/* ========================================================= */
+/* PANTALLA DEL SOBRE                */
+/* ========================================================= */
+
+.envelope-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  perspective: 1400px;
+  opacity: 1;
+  backdrop-filter: blur(0px);
+  transition:
+    opacity 1.6s ease,
+    backdrop-filter 1.6s ease;
+}
+
+.envelope-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  backdrop-filter: blur(6px);
+}
+
+.envelope.drop-exit {
+  animation: envelopeDrop 1.2s ease forwards;
+}
+
+/* ========================================================= */
+/* RSVP – SISTEMA UNIFICADO Y CONSISTENTE                    */
+/* ========================================================= */
+
+#rsvp {
+  padding-left: 6vw;
+  padding-right: 6vw;
+  position: relative;
+}
+
+/* ========================================================= */
+/* ARCO RSVP (CONTENEDOR ÚNICO)                              */
+/* ========================================================= */
+
+#rsvp .arco-base {
+  width: 430px;
+  min-height: 680px;
+  margin: 0 auto;
+  padding: 120px 48px 90px;
+
+  background: var(--arco-bg);
+  border-radius: 260px 260px 0 0;
+  box-shadow: var(--shadow-main);
+
+  text-align: center;
+  position: relative;
+  display: block;
+}
+
+/* ❌ YA NO SE OCULTA EL ARCO */
+/*
+#rsvp.completed .arco-base {
+  display: none;
+}
+*/
+
+/* ========================================================= */
+/* FORMULARIO RSVP                                           */
+/* ========================================================= */
+.rsvp-container {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#rsvp.completed #rsvp-form {
+  display: none;
+}
+
+.rsvp-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 1.6rem auto 2.4rem;
+  max-width: 460px;
+}
+
+/* ========================================================= */
+/* OPCIONES                                                  */
+/* ========================================================= */
+
+.rsvp-options {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  margin-bottom: 2.6rem;
+  flex-wrap: wrap;
+}
+
+.rsvp-btn {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  padding: 0.85rem 2.2rem;
+  border-radius: 30px;
+  border: 1px solid var(--white);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--white);
+}
+
+.rsvp-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ========================================================= */
+/* FINAL RSVP (DENTRO DEL ARCO)                              */
+/* ========================================================= */
+#rsvp-final {
+  display: none;
+  margin-top: 1.5rem;
+  text-align: center;
+
+  /* 🔥 MÁS ESPACIO */
+  padding: 50px 25px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+
+  position: relative;
+}
+
+/* ACTIVADO */
+#rsvp.completed #rsvp-final {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* contenido arriba */
+#rsvp-final > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* TITULO */
+#rsvp-final h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.9rem;
+  margin-bottom: 15px;
+  color: var(--white);
+}
+
+/* TEXTO PRINCIPAL 🔥 */
+#rsvp-final p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.15rem; /* 👈 más grande */
+  line-height: 1.7;
+
+  max-width: 300px; /* 👈 MÁS ANGOSTO = elegante */
+  margin: 0 auto 25px;
+
+  opacity: 0.95;
+}
+
+.rsvp-sign {
+  margin-top: 36px;
+  font-family: "Great Vibes", cursive;
+  font-size: 32px;
+  opacity: 0.9;
+  background: linear-gradient(120deg, #d4af37, #fff2b8, #d4af37);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.rsvp-label {
+  display: none;
+}
+
+.rsvp-label {
+  display: none;
+  font-size: 0.9rem;
+  color: #6b5b5b;
+  margin-bottom: 6px;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+#rsvpNombreInput {
+  width: 220px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbbcbc;
+  background: var(--surface-light);
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+#rsvpNombreInput:focus {
+  border-color: #a88c8c;
+  box-shadow: 0 0 0 2px rgba(168, 140, 140, 0.2);
+}
+/* ========================================================= */
+/* FIX REVEAL + ESTADO FINAL                                 */
+/* ========================================================= */
+
+#rsvp.completed {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+#rsvp.completed.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ========================================================= */
+/* RESPONSIVE                                                */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+  #rsvp .arco-base {
+    width: 86%;
+    max-width: 320px;
+    min-height: 580px;
+    padding: 100px 28px 70px;
+    border-radius: 200px 200px 0 0;
+  }
+
+  .rsvp-text,
+  #rsvp-final p {
+    max-width: 100%;
+  }
+
+  .rsvp-options {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rsvp-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  #rsvp {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  #rsvp .arco-base {
+    padding: 3rem 2rem;
+  }
+
+  .rsvp-container {
+    max-width: 100%;
+  }
+
+  .rsvp-options {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rsvp-btn {
+    width: 100%;
+  }
+}
+
+/* ============================= */
+/* ANIMACIONES BASE              */
+/* ============================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 0.4s ease;
+}
+
+/* ============================= */
+/* RESPONSIVE                    */
+/* ============================= */
+
+@media (max-width: 768px) {
+  #rsvp {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  #rsvp .arco-base {
+    padding: 3rem 2rem;
+    max-height: none;
+  }
+
+  .rsvp-container {
+    max-width: 100%;
+  }
+
+  .rsvp-options {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rsvp-btn {
+    width: 100%;
+  }
+}
+
+/* ================= RSVP – PASE Y MESA ================= */
+
+.rsvp-pass-info {
+  margin: 1.8rem 0 1.2rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  text-align: center;
+
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.rsvp-pass-item {
+  margin-bottom: 0.8rem;
+}
+
+.rsvp-pass-item:last-child {
+  margin-bottom: 0;
+}
+
+.rsvp-pass-item .label {
+  display: block;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg-soft);
+}
+
+.rsvp-pass-item strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2f3e35;
+}
+
+#rsvp-final {
+  animation: fadeUp 0.8s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================================= */
+/* NOMBRE DEL INVITADO                                       */
+/* ========================================================= */
+
+.rsvp-guest-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin: 12px 0 16px;
+  color: var(--white);
+}
+
+.rsvp-guest-name::before {
+  content: "Invitación para";
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+/* ====================================== */
+/* ICONOS TIPO SLIDE (SOLO 3 SECCIONES)   */
+/* ====================================== */
+
+/* PROGRAMA */
+#programa .icon {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* VESTIMENTA */
+#vestimenta .vestimenta-icon {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* REGALOS */
+#regalos .icon {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* PROGRAMA */
+#programa.reveal.visible .icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+/* VESTIMENTA */
+#vestimenta.reveal.visible .vestimenta-icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+
+/* REGALOS */
+#regalos.reveal.visible .icon {
+  animation: iconReveal 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+/* ========================================================= */
+/* SOBRE – DEFINITIVO, COLOR CORRECTO Y ESCALABLE            */
+/* ========================================================= */
+
+.envelope {
+  width: min(92vw, 420px);
+  aspect-ratio: 420 / 235;
+  position: relative;
+  background: var(--envelope-bg);
+  perspective: 900px;
+  overflow: hidden;
+
+  box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.18),
+    0 14px 34px rgba(0, 0, 0, 0.22);
+}
+
+/* ========================================================= */
+/* LÍNEAS EN X (SUAVES)                                      */
+/* ========================================================= */
+
+.envelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      45deg,
+      transparent 49.6%,
+      rgba(0, 0, 0, 0.1) 50%,
+      transparent 50.4%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 49.6%,
+      rgba(0, 0, 0, 0.1) 50%,
+      transparent 50.4%
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ========================================================= */
+/* SOLAPAS                                                   */
+/* ========================================================= */
+
+.flap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* INFERIOR */
+.flap.front {
+  border-width: 118px 210px;
+  border-left-color: var(--envelope-bg);
+  border-right-color: var(--envelope-bg);
+  border-bottom-color: var(--envelope-bg);
+  border-top-color: transparent;
+  z-index: 3;
+  filter: brightness(0.96);
+}
+
+.flap.front::after {
+  content: "";
+  position: absolute;
+  left: -210px;
+  bottom: -118px;
+  border-width: 116px 210px;
+  border-style: solid;
+  border-bottom-color: var(--envelope-bg);
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+/* SUPERIOR */
+.flap.top {
+  border-width: 118px 210px;
+  border-top-color: var(--envelope-bg);
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  z-index: 4;
+  filter: brightness(1.03);
+}
+
+/* ========================================================= */
+/* CARTA (CONTENEDOR DEL SITIO)                              */
+/* ========================================================= */
+
+.letter {
+  position: absolute;
+  width: 405px;
+  height: 215px;
+  top: 10px;
+  left: 0;
+  background: var(--fondo-arco);
+  border-radius: 8px;
+  z-index: 1;
+  overflow: hidden;
+  display: block;
+  transform-origin: top center;
+  transform: rotateX(-88deg) translateY(-40px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* contenido oculto mientras se desdobla */
+.letter-content {
+  opacity: 1; /* 👈 visible por defecto */
+  transition: opacity 0.5s ease;
+  width: 100%;
+  min-height: 100%;
+}
+
+#siteRoot {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.letter.unfolded {
+  animation: letterUnfold 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes letterUnfold {
+  0% {
+    transform: rotateX(-88deg) translateY(-20px);
+    opacity: 1;
+  }
+
+  25% {
+    transform: rotateX(-70deg) translateY(-28px);
+  }
+
+  55% {
+    transform: rotateX(-30deg) translateY(6px);
+  }
+
+  85% {
+    transform: rotateX(4deg) translateY(-2px);
+  }
+
+  100% {
+    transform: rotateX(0deg) translateY(0);
+  }
+}
+
+/* ========================================================= */
+/* CARTA → SITIO COMPLETO                                   */
+/* ========================================================= */
+.letter.hero {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  overflow-y: visible;
+  overflow-x: hidden;
+  transform: none;
+  border-radius: 0;
+  background: transparent;
+  z-index: 1;
+  padding-bottom: 90px;
+}
+
+.letter.hero .letter-content {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+
+/* ========================================================= */
+/* ANIMACIÓN SOLAPA                                         */
+/* ========================================================= */
+
+@keyframes flip {
+  to {
+    transform: rotateX(180deg);
+  }
+}
+
+.envelope.open .flap.top {
+  animation: flip 1s forwards;
+}
+
+.envelope.open .flap,
+.envelope.open::after {
+  pointer-events: none;
+}
+
+.envelope.open {
+  overflow: visible;
+}
+
+/* ========================================================= */
+/* RESPONSIVE                                                */
+/* ========================================================= */
+
+@media (max-width: 480px) {
+  .envelope {
+    width: 92vw;
+    height: calc(92vw * 235 / 420);
+  }
+
+  .flap.front {
+    border-width: calc(92vw * 118 / 420) calc(92vw * 210 / 420);
+  }
+
+  .flap.front::after {
+    left: calc(-92vw * 210 / 420);
+    bottom: calc(-92vw * 118 / 420);
+    border-width: calc(92vw * 116 / 420) calc(92vw * 210 / 420);
+  }
+
+  .flap.top {
+    border-width: calc(92vw * 118 / 420) calc(92vw * 210 / 420);
+  }
+}
+
+/* ========================================================= */
+/* SELLO                                                   */
+/* ========================================================= */
+#presentacion.editorial-text {
+  padding-top: 60px;
+}
+.seal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+
+  /* nunca se transforma el contenedor */
+  transform: none !important;
+}
+
+/* IMAGEN DEL SELLO */
+.seal img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+
+  animation: sealIdle 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.18));
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease,
+    filter 0.35s ease;
+}
+
+.seal.settled img {
+  transform: scale(1);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.22));
+}
+
+/* LATIDO SUAVE */
+@keyframes sealIdle {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.06);
+  }
+  55% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* CLICK – SE HUNDE */
+.seal.press img {
+  transform: scale(0.82) translateY(4px);
+  filter: blur(0.6px) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* DESAPARECER */
+.seal.fade-out img {
+  opacity: 0;
+  transform: scale(0.65);
+}
+
+@media (max-width: 480px) {
+  .seal {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+
+    width: 100px; /* contenedor más chico */
+    height: 100px;
+
+    transform: none;
+  }
+
+  /* 👇 SELLO MÁS CHICO REALMENTE */
+  .seal img {
+    width: 100px;
+    height: 100px;
+    animation: sealIdleMobile 2.8s ease-in-out infinite;
+    filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.16));
+  }
+
+  /* latido más delicado para móvil */
+  @keyframes sealIdleMobile {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.06);
+    }
+    70% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* click más sutil */
+  .seal.press img {
+    transform: scale(0.85);
+    filter: blur(0.4px);
+  }
+
+  #presentacion.editorial-text {
+    padding-top: 60px;
+  }
+}
+
+/* ========================================================= */
+/* BOTÓN DE MÚSICA                                         */
+/* ========================================================= */
+
+.music-btn {
+  position: fixed;
+  top: 68px;
+  right: 18px;
+  opacity: 0;
+  pointer-events: none;
+  width: 58px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  z-index: 100000;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  transform: scale(0.92);
+}
+
+body.footer-ready .music-btn {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  visibility: visible;
+}
+
+.music-btn:hover {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.music-btn img {
+  width: 42px;
+  height: 42px;
+}
+
+/* efecto “latido” cuando la música está encendida */
+@keyframes music-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+  50% {
+    transform: scale(1.07);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.music-playing {
+  animation: music-pulse 1.8s ease-in-out infinite;
+}
+
+/* === FIX VIDA AL SITIO === */
+.site-root {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+#rsvp {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.section-arco {
+  position: relative;
+}
+
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(26px, 5vw, 42px);
+  text-align: center;
+  margin-bottom: 28px;
+
+  background: linear-gradient(
+    120deg,
+    var(--theme-primary),
+    var(--theme-primary-soft),
+    var(--theme-primary)
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 1px;
+}
+
+/* variaciones */
+.section-arco .b1 {
+  top: 18%;
+  transform: rotate(-14deg) scale(0.9);
+}
+
+.section-arco .b2 {
+  top: 52%;
+  transform: rotate(12deg) scale(0.95);
+}
+
+.section-arco .b3 {
+  top: 72%;
+  transform: rotate(6deg) scale(0.8);
+  opacity: 0.16;
+}
