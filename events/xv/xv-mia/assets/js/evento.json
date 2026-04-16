@@ -5,7 +5,7 @@
   "tipo_evento": "xv",
   "paquete": "armonia",
   "evento": {
-    "fecha": "2026-05-08T18:30:00",
+    "fecha": "2026-05-08T19:00:00",
     "host": {
       "nombre": "Mia"
     }
@@ -162,8 +162,8 @@
       },
       {
         "enabled": true,
-        "tipo": "Ceremonia religiosa y Recepción",
-        "hora": "18:30 HRS",
+        "tipo": "Recepción",
+        "hora": "19:00 HRS",
         "lugar": "Salón Provenza Los Girasoles",
         "direccion": [
           "Av. 5 de Mayo 1408,",
